@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const passport = require('passport');
-const multer = require('multer');
 
 
 const app = express();
@@ -32,20 +31,11 @@ app.use(passport.initialize());
 
 require('./config/passport')(passport);
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './public/images')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now()+'.jpg')
-    }
-  });
-
-  var upload = multer({ storage: storage });
 
 
-const user = require('./routes/api/users');
-const post = require('./routes/api/getPost');
+
+const user = require('./routes/users');
+const post = require('./routes/posts');
 
 app.use('/users',user);
 app.use('/bloggers',post)
