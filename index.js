@@ -44,22 +44,20 @@ var storage = multer.diskStorage({
   var upload = multer({ storage: storage });
 
 
-
-// app.get('/', (req,res) => {
-//     res.send("<h1>Hello World!</h1>");
-// });
-
 const user = require('./routes/api/users');
-const post = require('./routes/api/posts');
-app.use('/api/users',user);
-app.use('/api/posts',upload.single('img'),post)
+const post = require('./routes/api/getPost');
+
+app.use('/users',user);
+app.use('/bloggers',post)
 
 mongoose.Promise = global.Promise;
 //Connecting to database
+
 const db = require('./config/keys').mongoURI;
 mongoose.connect(db, { 
     useNewUrlParser: true})
     .then(() => {
+
         console.log(`Connected to database ${db}`);
     }).catch(err => {
     console.log(`Unable to connect to database ${err}`);

@@ -14,7 +14,6 @@ router.post('/', (req, res) => {
     let data = {
         post_text: req.body.post_text,
         post_image: req.file.filename,
-        category: req.body.category,
         comments: req.body.comments,
         rating: req.body.rating
 
