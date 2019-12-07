@@ -89,6 +89,7 @@ router.post('/login', (req, res) => {
                                 mgs:"Successfully logged in!",
                                 success: true,
                                 token: token,
+                                userInfo : user,
                                 userType: user.userType
                             });
                         }
@@ -116,6 +117,18 @@ router.get('/profile', passport.authenticate('jwt',
     }
 
 );
+
+router.put('/account', (req, res) => {
+    console.log(req.body)
+    username = req.body.username;
+    newName = req.body.name;
+    newPassword = req.body.password;
+    const text = async function() {
+        const update = await User.updateUser(username, newName, bcrypt.hashSync(newPassword, 10))
+        res.send(await User.getUserByUsername(username))
+    }
+    text();
+})
 
 module.exports = router;
 
